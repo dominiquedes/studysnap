@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudySnap - Join the Waitlist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-jQ3qwM1DyUXvODvLchFVXDH5uM3LS68LfK5p93bR7Sk93pzmqMKeR0k8rKyscZfM+u7v+1UHRhJ2kmOnZbO7TQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --primary-blue: #2D7FF9;
+      --primary-blue-hover: #1C5DDC;
+      --accent-teal: #00C9A7;
+      --secondary-purple: #6C5DD3;
+      --background-light: #F8FAFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #4F5B69;
+      --card-bg: #FFFFFF;
+      --highlight-yellow: #FFE177;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background-light);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: var(--card-bg);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: var(--primary-blue);
+      font-size: 1.75rem;
+      font-weight: 800;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+      background: linear-gradient(to bottom right, var(--primary-blue), var(--accent-teal));
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      font-weight: 800;
+    }
+
+    .hero p {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-button {
+      background-color: #fff;
+      color: var(--primary-blue);
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      margin-top: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: var(--highlight-yellow);
+      color: var(--text-primary);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      color: var(--secondary-purple);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      font-size: 1.25rem;
+    }
+
+    .card h3 i {
+      margin-right: 0.5rem;
+      color: var(--accent-teal);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      background-color: var(--card-bg);
+      margin-top: 3rem;
+      margin-top: auto;
+    }
+  </style>
+  <style>
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(30, 41, 59, 0.45);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.active {
+      display: flex;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(44,127,249,0.13);
+      padding: 2.5rem 2rem 2rem;
+      max-width: 350px;
+      width: 90vw;
+      position: relative;
+      text-align: center;
+      animation: modalIn 0.25s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes modalIn {
+      from { transform: translateY(40px) scale(0.98); opacity: 0; }
+      to { transform: none; opacity: 1; }
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: #888;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .modal-close:hover {
+      color: var(--primary-blue);
+    }
+    .modal-step {
+      display: none;
+    }
+    .modal-step.active {
+      display: block;
+    }
+    .modal input[type="text"], .modal input[type="email"] {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 1.2rem 0 1.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #f8faff;
+    }
+    .modal .modal-btn {
+      background: var(--primary-blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal .modal-btn:hover {
+      background: var(--primary-blue-hover);
+    }
+    .modal-progress {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
+    .modal-progress-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #e0e7ef;
+      transition: background 0.2s;
+    }
+    .modal-progress-dot.active {
+      background: var(--primary-blue);
+    }
+    .modal-arrows {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+    .arrow-btn {
+      background: none;
+      border: none;
+      font-size: 1.7rem;
+      color: var(--primary-blue);
+      cursor: pointer;
+      padding: 0.3rem 0.7rem;
+      border-radius: 50%;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .arrow-btn:focus, .arrow-btn:hover {
+      background: var(--background-light);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>StudySnap</h1>
+  </header>
+
+  <section class="hero">
+    <h2>Study smarter, together.</h2>
+    <p>Upload your notes, get AI-generated summaries and flashcards, and connect with other students — all in one place.</p>
+    <button class="cta-button">Join the Waitlist</button>
+  </section>
+
+  <div style="text-align:center; margin: 2rem 0;">
+    <img src="snapstudy-visualaid-removebg-preview__1_-removebg-preview.png" alt="StudySnap Visual Aid" style="max-width: 600px; width: 100%; filter: drop-shadow(0 4px 16px rgba(44,127,249,0.12)); border-radius: 18px; background: rgba(255,255,255,0.7);" />
+  </div>
+
+  <section class="features">
+    <div class="card">
+      <h3><i class="fas fa-file-upload"></i> Upload Notes</h3>
+      <p>DOC, PDF, and images. StudySnap turns them into flashcards and summaries instantly.</p>
+    </div>
+    <div class="card">
+      <h3><i class="fas fa-brain"></i> AI Summaries</h3>
+      <p>Highlight the key ideas with clear, quick-to-review summaries generated by AI.</p>
+    </div>
+    <div class="card">
+      <h3><i class="fas fa-comments"></i> Social Feed</h3>
+      <p>See what others are studying, share ideas, and stay motivated with the community feed.</p>
+    </div>
+    <div class="card">
+      <h3><i class="fas fa-layer-group"></i> Flashcards</h3>
+      <p>Auto-generated from your notes. Review them solo or collaborate with friends.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    &copy; 2025 StudySnap. All rights reserved.
+  </footer>
+
+  <!-- Waitlist Modal -->
+  <div class="modal-backdrop" id="waitlistModalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modalCloseBtn" aria-label="Close">&times;</button>
+      <div class="modal-progress">
+        <div class="modal-progress-dot" id="dotStep1"></div>
+        <div class="modal-progress-dot" id="dotStep2"></div>
+      </div>
+      <form id="waitlistForm" autocomplete="off">
+        <div class="modal-step" id="modalStep1">
+          <h3>What's your nickname or name?</h3>
+          <input type="text" id="waitlistName" name="name" placeholder="e.g. Alex or StudyStar" required />
+          <div class="modal-arrows" style="justify-content: flex-end;">
+            <button type="button" class="arrow-btn" id="toStep2Btn" aria-label="Next">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="modal-step" id="modalStep2">
+          <h3>What's your email?</h3>
+          <input type="email" id="waitlistEmail" name="email" placeholder="you@email.com" required />
+          <div class="modal-arrows">
+            <button type="button" class="arrow-btn" id="backToStep1Btn" aria-label="Back">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <button type="submit" class="modal-btn" style="flex:1;">Join Waitlist</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Modal logic
+    const modalBackdrop = document.getElementById('waitlistModalBackdrop');
+    const joinBtn = document.querySelector('.cta-button');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    const step1 = document.getElementById('modalStep1');
+    const step2 = document.getElementById('modalStep2');
+    const dot1 = document.getElementById('dotStep1');
+    const dot2 = document.getElementById('dotStep2');
+    const toStep2Btn = document.getElementById('toStep2Btn');
+    const backToStep1Btn = document.getElementById('backToStep1Btn');
+    const form = document.getElementById('waitlistForm');
+
+    function showModal() {
+      modalBackdrop.classList.add('active');
+      showStep(1);
+    }
+    function closeModal() {
+      modalBackdrop.classList.remove('active');
+    }
+    function showStep(step) {
+      if (step === 1) {
+        step1.classList.add('active');
+        step2.classList.remove('active');
+        dot1.classList.add('active');
+        dot2.classList.remove('active');
+      } else {
+        step1.classList.remove('active');
+        step2.classList.add('active');
+        dot1.classList.remove('active');
+        dot2.classList.add('active');
+      }
+    }
+
+    joinBtn.addEventListener('click', showModal);
+    closeBtn.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+    toStep2Btn.addEventListener('click', () => {
+      const nameVal = document.getElementById('waitlistName').value.trim();
+      if (nameVal.length > 0) {
+        showStep(2);
+        setTimeout(() => document.getElementById('waitlistEmail').focus(), 100);
+      } else {
+        document.getElementById('waitlistName').focus();
+      }
+    });
+    if (backToStep1Btn) {
+      backToStep1Btn.addEventListener('click', () => {
+        showStep(1);
+        setTimeout(() => document.getElementById('waitlistName').focus(), 100);
+      });
+    }
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('waitlistName').value.trim();
+      const email = document.getElementById('waitlistEmail').value.trim();
+      try {
+        const res = await fetch('http://localhost:4000/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email })
+        });
+        if (res.ok) {
+          closeModal();
+          alert('Thank you for joining the waitlist!');
+        } else {
+          const data = await res.json();
+          alert(data.error || 'There was an error. Please try again.');
+        }
+      } catch (err) {
+        alert('There was an error. Please try again.');
+      }
+    });
+    // Accessibility: close modal on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
