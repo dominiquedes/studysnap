@@ -371,7 +371,7 @@
       const name = document.getElementById('waitlistName').value.trim();
       const email = document.getElementById('waitlistEmail').value.trim();
       try {
-        const res = await fetch('https://studysnap.railway.internal/api/waitlist', {
+        const res = await fetch('https://studysnap-production.up.railway.app/api/waitlist', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email })
